@@ -1,7 +1,7 @@
 @import "./base/reset.less";
 @import "./base/variables.less";
-@import "./base/buttons.less";
 @import "./base/mixins.less";
+@import "./base/cssmenu.less";
 @import "./base/photoswipe/photoswipe.less";
 
 // @import url(http://fonts.googleapis.com/css?family=Roboto);
@@ -45,16 +45,26 @@ body {
   width: 100%;
   height: 100%;
   font-size: 14px;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Merriweather', sans-serif;
   margin: 0px;
   padding: 0px;
   color: @color-1;
 }
-input {
-  color: #333;
+.body-container {
+  max-width: 1200px;
+  margin: auto;
+  min-height: 100%;
+}
+.nav-list {
+
+}
+.page-collection {
+  display: inline-block;
+  font-size: 150%;
 }
 header {
   position: relative;
+
 }
 p {
   color: @pColor;

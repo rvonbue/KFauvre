@@ -17,10 +17,9 @@ var AppView = BaseView.extend({
     this.$el.toggleClass("sidebar-hide");
   },
   render: function () {
-    // var photoSwipeView = new PhotoSwipeView({ parentEl: this.$el });
-    // this.$el.append(new SidebarView().render().el);
-    this.$el.append(headerHTML);
-    this.$el.append(navListHTML);
+    
+    // this.$el.append(headerHTML);
+    // this.$el.append(navListHTML);
     this.$el.append(new EnneagramTypeTest().render().el);
     return this;
   }

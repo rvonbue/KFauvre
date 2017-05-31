@@ -26,10 +26,35 @@ span.p-directions {
 }
 .group-statement {
   padding: 18px 0px;
+  opacity: 1;
+  transition: 0.5s all;
+  &.hide {
+    opacity: 0;
+  }
 }
 .group-title {
   font-size: 120%;
 }
+.result-title {
+  text-align: left;
+  font-size: 175%;
+  color: @color-4;
+  padding-bottom: 8px;
+}
+.results-table {
+  width: 100%;
+  color: @color-4;
+  border-collapse: collapse;
+  table, th, td {
+      border: 1px solid black;
+  }
+  th, td {
+      padding: 8px;
+  }
+  font-size: 150%;
+  text-align: center;
+}
+
 div.statement {
   .BoxShadowHelper(3);
   border: 2px solid @color-1;
@@ -40,5 +65,19 @@ div.statement {
   cursor: pointer;
   &:active {
     background-color: @color-3;
+    .BoxShadowHelper(1);
   }
+}
+.start-quiz {
+  .BoxShadowHelper(5);
+  max-width: 250px;
+  margin: auto;
+  text-align: center;
+  background-color: @color-4;
+  color: @color-5;
+  font-size: 125%;
+  padding: 24px 18px;
+  display: block;
+  cursor: pointer;
+  .no-select;
 }

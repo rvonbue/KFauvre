@@ -18,17 +18,18 @@ module.exports = {
      ]
    },
 	 plugins: [
-      new webpack.optimize.UglifyJsPlugin({
-			sourceMap: true,
-            compress: {
-                warnings: false,
-            },
-            output: {
-                comments: false,
-            },
-        }),
+      // new webpack.optimize.UglifyJsPlugin({
+			// sourceMap: true,
+      //       compress: {
+      //           warnings: false,
+      //       },
+      //       output: {
+      //           comments: false,
+      //       },
+      //   }),
 		new webpack.ProvidePlugin({	_: "underscore", "window._": "underscore" }),
-    new ExtractTextPlugin('allStyles.css'),
+    new webpack.ProvidePlugin({ $: "jquery", jQuery: "jquery","window.jQuery": "jquery" }),
+    new ExtractTextPlugin('allStyles.css')
     ],
 	devServer: {
     contentBase: "./bin",

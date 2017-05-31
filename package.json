@@ -50,6 +50,8 @@
     "backbone": "^1.1.2",
     "jquery": "^3.1.1",
     "jquery-touchswipe": "^1.6.15",
+    "jquery-ui": "^1.12.1",
+    "jquery-ui-touch-punch": "^0.2.3",
     "underscore": "^1.8.2"
   }
 }

@@ -2,7 +2,9 @@ import eventController from "../controllers/eventController";
 import BaseView from "./BaseView";
 // import SidebarView from "./components/SidebarView";
 // import PhotoSwipeView from "./components/PhotoSwipeView";
-import testHTML from "./html/testPage.html";
+import headerHTML from "./html/header.html";
+import navListHTML from "./html/navlist.html";
+import EnneagramTypeTest from "./components/EnneagramTypeTest";
 
 import utils from "../util/utils";
 
@@ -17,7 +19,9 @@ var AppView = BaseView.extend({
   render: function () {
     // var photoSwipeView = new PhotoSwipeView({ parentEl: this.$el });
     // this.$el.append(new SidebarView().render().el);
-    this.$el.append(testHTML);
+    this.$el.append(headerHTML);
+    this.$el.append(navListHTML);
+    this.$el.append(new EnneagramTypeTest().render().el);
     return this;
   }
 });

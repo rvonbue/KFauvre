@@ -3,7 +3,7 @@
 @import "./base/mixins.less";
 @import "./base/cssmenu.less";
 @import "./base/photoswipe/photoswipe.less";
-
+@import "./components/enneagram.less";
 // @import url(http://fonts.googleapis.com/css?family=Roboto);
 
 html,
@@ -64,7 +64,9 @@ body {
 }
 header {
   position: relative;
-
+  > img {
+    max-width: 100%;
+  }
 }
 p {
   color: @pColor;

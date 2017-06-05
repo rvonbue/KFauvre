@@ -4,7 +4,7 @@
   npm install
 
 ## Start dev Server from project direct CLI
-  webpack-dev-server --hot --inline
+  webpack-dev-server --hot --inline --progress --colors
 
 ## Build all the assets when your ready to deploy to server.
   webpack

@@ -1,4 +1,5 @@
 const webpack = require('webpack');
+const path = require('path');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 // require("url?limit=10000!./file.png");
 
@@ -8,6 +9,13 @@ module.exports = {
        path: './bin',
        filename: 'app.bundle.js'
    },
+   resolve : {
+    alias: {
+      // bind version of jquery-ui
+      "jquery-ui": path.join(__dirname, "jquery-ui/jquery-ui.js"),
+       modules: path.join(__dirname, "node_modules"),
+    }
+  },
 	 module: {
      loaders: [
        { test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader' },
@@ -20,13 +28,13 @@ module.exports = {
 	 plugins: [
       // new webpack.optimize.UglifyJsPlugin({
 			// sourceMap: true,
-      //       compress: {
-      //           warnings: false,
-      //       },
-      //       output: {
-      //           comments: false,
-      //       },
-      //   }),
+      //   compress: {
+      //       warnings: false,
+      //   },
+      //   output: {
+      //       comments: false,
+      //   },
+      // }),
 		new webpack.ProvidePlugin({	_: "underscore", "window._": "underscore" }),
     new webpack.ProvidePlugin({ $: "jquery", jQuery: "jquery","window.jQuery": "jquery" }),
     new ExtractTextPlugin('allStyles.css')

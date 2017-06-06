@@ -8,13 +8,14 @@ let buttonContainerHTML = require('../html/buttonContainer.html');
 
 let EnneagramTypeTest = BaseView.extend({
   className: "enneagram-type-test",
-  titleTemplate: _.template("<h3 class='group-title'><strong><%= title %>:</strong> From the three statements below choose the sentence with which you most identify.</h3>"),
+  titleTemplate: _.template("<h3 class='group-title'><strong><%= title %>:</strong> Rank the three statements below.</h3>"),
   statementTemplate: _.template("<li data-tritype='<%= tritype %>' class='statement'><div class='number'><%= indexNum %></div><div class='li-body'><%= text %></div></li>"),
   events: function () {
     return mobile ?
     {
       "touchend .next-quiz": 'clickNextStatement',
-      "touchend .start-quiz": "startQuiz"
+      "touchend .start-quiz": "startQuiz",
+      "touchend .reset-quiz": "resetQuiz"
     } :
     {
       "click .next-quiz": "clickNextStatement",
@@ -30,7 +31,6 @@ let EnneagramTypeTest = BaseView.extend({
   },
 
   clickNextStatement: function (evt) {
-    // let self = this;
     let index = $(evt.currentTarget).index(".statement") + 1;
     let val = (this.groupStatementIndex * 3) + index;
 
@@ -48,8 +48,7 @@ let EnneagramTypeTest = BaseView.extend({
     }
   },
   collectTestResults: function (testResults) {
-    // this.testResults[this.groupStatementIndex] = val;
-    var groupResults = [];
+    let groupResults = [];
     this.groupStatementListEl.children("li").each(function (i, el) {
       groupResults.push({ tritype:$(el).data("tritype"),  rank: i + 1 });
     });
@@ -57,7 +56,6 @@ let EnneagramTypeTest = BaseView.extend({
   },
   startQuiz: function () {
     this.resetQuizVariables();
-    this.$el.find(".start-quiz").hide();
     this.bottomContainerEl.removeClass("start").addClass("next");
     this.loadNewGroup();
     this.$el.find(".instructions-container").addClass("hide");
@@ -65,27 +63,39 @@ let EnneagramTypeTest = BaseView.extend({
   resetQuizVariables: function () {
     this.groupStatementIndex = 0;
     this.testResults = [];
-    // this.selectedStatementEls = [];
   },
   resetQuiz: function () {
-    this.resetQuizVariables();
     this.groupStatementEl.empty();
-    this.startQuiz();
+    this.$el.find(".instructions-container").removeClass("hide");
+    this.bottomContainerEl.attr("class", "bottom-container start");
   },
   addSelectedEl: function (el) {
     el.attr("class", "statement-results");
     this.selectedStatementEls.push(el);
   },
   getTableResults: function () {
-    return resultsHTML({ a:this.testResults[0][0].tritype, b:this.testResults[1][0].tritype, c: this.testResults[2][0].tritype });
+    return resultsHTML(this.getTestResults());
+  },
+  calcGroupResults: function (arr) {
+    let text = "";
+    _.each(arr, function (item) {
+      text += item.tritype + ", ";
+    });
+
+    return text;
+  },
+  getTestResults: function () {
+    let a = [this.testResults[0][0].tritype, this.calcGroupResults(this.testResults[0])];
+    let b = [this.testResults[1][0].tritype, this.calcGroupResults(this.testResults[1])];
+    let c = [this.testResults[2][0].tritype, this.calcGroupResults(this.testResults[2])];
+
+    return { a: a, b: b, c: c };
   },
   showResults: function () {
     let table = this.getTableResults();
+    this.bottomContainerEl.removeClass("start next").addClass("reset");
     this.groupStatementEl.append(this.selectedStatementEls);
     this.groupStatementEl.append(table);
-  },
-  toggleSidebar: function () {
-    eventController.trigger( eventController.TOGGLE_SIDEBAR_VISIBILITY);
   },
   loadNewGroup: function () {
     let index = this.groupStatementIndex;
@@ -98,8 +108,6 @@ let EnneagramTypeTest = BaseView.extend({
       let index =  $(el).index("li");
       let numberDiv = $(el).find(".number").text(num);
       num++;
-      console.log("EL:", $(el).find(".li-body").text() );
-      console.log("index:", index );
     });
   },
   loadNewGroupIntro: function (index) {
@@ -116,14 +124,6 @@ let EnneagramTypeTest = BaseView.extend({
       stop: _.bind(this.updateStatementNumbers, this)
     }, this);
   },
-  // addGroupStatements: function () {
-  //   let html = "";
-  //   _.each(groupStatements, function (obj, index) {
-  //     html += this.addGroupStatement(index);
-  //   }, this);
-  //
-  //   return html;
-  // },
   render: function () {
     let bodyContainerEl = $("<div class='enneagram-body-container'</div>");
         bodyContainerEl.append(directionsHTML);

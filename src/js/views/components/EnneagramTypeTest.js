@@ -101,7 +101,7 @@ let EnneagramTypeTest = BaseView.extend({
   },
   showResults: function () {
     let table = this.getTableResults();
-    this.bottomContainerEl.removeClass("start next");
+    this.bottomContainerEl.attr("class",  "bottom-container reset");
     _.each(this.selectedTritypes, function (i, el) {
       this.groupStatementListEl.append(el);
     }, this);

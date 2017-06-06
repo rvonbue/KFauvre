@@ -90,6 +90,15 @@ li.statement {
     background-color: @color-3;
     .BoxShadowHelper(1);
   }
+  &.final {
+    cursor: pointer;
+    > .number {
+      display: none;
+    }
+    &.selected {
+      background-color: @color-3;
+    }
+  }
 }
 div.number {
   // min-width: 50px;
@@ -103,7 +112,7 @@ div.number {
 div.li-body {
   margin-left: 75px;
 }
-.start-quiz, .reset-quiz, .next-quiz {
+.start-quiz, .reset-quiz, .next-quiz, .show-results {
   .BoxShadowHelper(5);
   display: block;
   display: none;
@@ -134,6 +143,11 @@ div.li-body {
   }
   &.reset {
     .reset-quiz {
+      display: block;
+    }
+  }
+  &.results {
+    .show-results {
       display: block;
     }
   }

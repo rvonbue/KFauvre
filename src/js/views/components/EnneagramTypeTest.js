@@ -8,7 +8,7 @@ let buttonContainerHTML = require('../html/buttonContainer.html');
 
 let EnneagramTypeTest = BaseView.extend({
   className: "enneagram-type-test",
-  titleTemplate: _.template("<h3 class='group-title'><strong><%= title %>:</strong> Rank the three statements below.</h3>"),
+  titleTemplate: _.template("<h3 class='group-title'><strong><%= title %>:</strong> <%= text %></h3>"),
   statementTemplate: _.template("<li data-tritype='<%= tritype %>' class='statement'><div class='number'><%= indexNum %></div><div class='li-body'><%= text %></div></li>"),
   events: function () {
     return mobile ?
@@ -20,7 +20,9 @@ let EnneagramTypeTest = BaseView.extend({
     {
       "click .next-quiz": "clickNextStatement",
       "click .start-quiz": "startQuiz",
-      "click .reset-quiz": "resetQuiz"
+      "click .reset-quiz": "resetQuiz",
+      "click .show-results": "clickShowResults",
+      "click .statement.final": "selectFinalType"
     }
   },
   initialize: function () {
@@ -35,22 +37,26 @@ let EnneagramTypeTest = BaseView.extend({
     let val = (this.groupStatementIndex * 3) + index;
 
     this.collectTestResults(this.testResults);
+    this.groupStatementEl.addClass("hide").empty();
+    this.groupStatementListEl.empty();
+
     if ( this.groupStatementIndex < groupStatements.length - 1 ) {
-      this.groupStatementEl.addClass("hide").empty();
-      this.groupStatementListEl.empty();
       this.groupStatementIndex++;
       this.loadNewGroup();
-      this.groupStatementEl.removeClass("hide");
     } else {
-       this.groupStatementEl.empty();
-       this.groupStatementListEl.empty();
-       this.showResults();
+      this.loadLastGroup();
     }
+
+    this.groupStatementEl.removeClass("hide");
   },
   collectTestResults: function (testResults) {
     let groupResults = [];
+    let self = this;
+
     this.groupStatementListEl.children("li").each(function (i, el) {
-      groupResults.push({ tritype:$(el).data("tritype"),  rank: i + 1 });
+      var el = $(el);
+      if ( i === 0 ) self.selectedTritypes.push(el);
+      groupResults.push({ tritype: el.data("tritype"),  rank: i + 1 });
     });
     testResults.push(groupResults);
   },
@@ -63,15 +69,12 @@ let EnneagramTypeTest = BaseView.extend({
   resetQuizVariables: function () {
     this.groupStatementIndex = 0;
     this.testResults = [];
+    this.selectedTritypes = [];
   },
   resetQuiz: function () {
     this.groupStatementEl.empty();
     this.$el.find(".instructions-container").removeClass("hide");
     this.bottomContainerEl.attr("class", "bottom-container start");
-  },
-  addSelectedEl: function (el) {
-    el.attr("class", "statement-results");
-    this.selectedStatementEls.push(el);
   },
   getTableResults: function () {
     return resultsHTML(this.getTestResults());
@@ -89,18 +92,43 @@ let EnneagramTypeTest = BaseView.extend({
     let b = [this.testResults[1][0].tritype, this.calcGroupResults(this.testResults[1])];
     let c = [this.testResults[2][0].tritype, this.calcGroupResults(this.testResults[2])];
 
-    return { a: a, b: b, c: c };
+    return { a: a, b: b, c: c , leadType: this.testResults[3] };
+  },
+  clickShowResults: function () {
+    this.groupStatementEl.empty();
+    this.groupStatementListEl.empty();
+    this.showResults();
   },
   showResults: function () {
     let table = this.getTableResults();
-    this.bottomContainerEl.removeClass("start next").addClass("reset");
-    this.groupStatementEl.append(this.selectedStatementEls);
+    this.bottomContainerEl.removeClass("start next");
+    _.each(this.selectedTritypes, function (i, el) {
+      this.groupStatementListEl.append(el);
+    }, this);
     this.groupStatementEl.append(table);
+  },
+  selectFinalType: function (evt) {
+    let selectedEl = this.groupStatementListEl.find("li.selected");
+    let selectedType = $(evt.currentTarget).data("tritype");
+
+    if (selectedEl) selectedEl.removeClass("selected");
+    $(evt.currentTarget).addClass("selected");
+    this.bottomContainerEl.addClass("results");
+    this.testResults.push(selectedType);
   },
   loadNewGroup: function () {
     let index = this.groupStatementIndex;
     this.loadNewGroupIntro(index);
     this.loadGroupStatements(index);
+  },
+  loadLastGroup: function () {
+    this.groupStatementEl.append(this.titleTemplate({ title:"Final", text: "Now select which statement out of the three groups represents you best" }));
+    this.groupStatementListEl.append(this.selectedTritypes);
+    _.each(this.selectedTritypes, function (el) {
+      el.addClass("final");
+    });
+    this.groupStatementEl.append(this.groupStatementListEl);
+    this.bottomContainerEl.attr("class", "bottom-container");
   },
   updateStatementNumbers: function () {
     let num = 1;
@@ -111,7 +139,7 @@ let EnneagramTypeTest = BaseView.extend({
     });
   },
   loadNewGroupIntro: function (index) {
-    this.groupStatementEl.append(this.titleTemplate(groupStatements[index]));
+    this.groupStatementEl.append(this.titleTemplate({ title: groupStatements[index].title, text: "Rank these three statements below by dragging and dropping."}));
   },
   loadGroupStatements: function (index) {
 
@@ -125,12 +153,12 @@ let EnneagramTypeTest = BaseView.extend({
     }, this);
   },
   render: function () {
+    this.bottomContainerEl.append(buttonContainerHTML);
+
     let bodyContainerEl = $("<div class='enneagram-body-container'</div>");
         bodyContainerEl.append(directionsHTML);
         bodyContainerEl.append(this.groupStatementEl);
-
-    this.bottomContainerEl.append(buttonContainerHTML);
-    bodyContainerEl.append(this.bottomContainerEl);
+        bodyContainerEl.append(this.bottomContainerEl);
 
     this.$el.append(bodyContainerEl);
     return this;

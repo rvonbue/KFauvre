@@ -19,6 +19,6 @@ import touchPunch from  "jquery-ui-touch-punch";
 
 $(function () {
   view = new AppView({});
-  $("body").append(view.render().el);
-
+  $("#enneagram-type-test").append(view.render().el);
+  console.log("Can find El on Page", $("#enneagram-type-test").length);
 });

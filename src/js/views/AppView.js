@@ -1,9 +1,8 @@
 import BaseView from "./BaseView";
-// import SidebarView from "./components/SidebarView";
-// import PhotoSwipeView from "./components/PhotoSwipeView";
-let headerHTML = require("./html/header.html");
-import navListHTML from "./html/navlist.html";
 import EnneagramTypeTest from "./components/EnneagramTypeTest";
+
+let headerHTML = require("./html/header.html");
+let navListHTML = require("./html/navlist.html");
 
 import utils from "../util/utils";
 
@@ -16,9 +15,7 @@ var AppView = BaseView.extend({
     this.$el.toggleClass("sidebar-hide");
   },
   render: function () {
-
-    this.$el.append(headerHTML);
-    // this.$el.append(navListHTML);
+    // this.$el.append(headerHTML);
     this.$el.append(new EnneagramTypeTest().render().el);
     return this;
   }

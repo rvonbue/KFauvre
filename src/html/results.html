@@ -1,0 +1,32 @@
+<div class="results-container">
+  <h3 class="result-title"> Results:</h3>
+  <!-- <ul class="result-instructions">
+    <li>Now rank your three types in order of preference. This is the sequence that you use the three types in your Tritype®.</li>
+    <li>Your top choice of these three types is your potential lead Type.</li>
+  </ul> -->
+
+  <table class="results-table">
+    <tr>
+      <th>Group</th>
+      <th>Tritype</th>
+      <th>Order you use your types</th>
+      <th>Potential Lead Type:</th>
+    </tr>
+    <tr>
+      <td>A</td>
+      <td><%= a[0] %></td>
+      <td><%= a[1] %></td>
+      <td ROWSPAN=3><%= leadType %></td>
+    </tr>
+    <tr>
+      <td>B</td>
+      <td><%= b[0] %></td>
+      <td><%= b[1] %></td>
+    </tr>
+    <tr>
+      <td>C</td>
+      <td><%= c[0] %></td>
+      <td><%= c[1] %></td>
+    </tr>
+  </table>
+</div>

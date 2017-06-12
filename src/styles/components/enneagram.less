@@ -1,0 +1,160 @@
+.enneagram-type-test {
+  padding: 18px 0px;
+  margin: 18px 0px;
+  border: 2px solid @color-1;
+}
+h3.type-test {
+  margin-bottom:0px;
+}
+.enneagram-body-container {
+  max-width: 800px;
+  margin: auto;
+  padding: 0px 45px;
+  > hr {
+    border-color: @color-1;
+  }
+}
+h3 {
+  text-align: center;
+  width: 100%;
+  font-size: 200%;
+}
+.instructions-container {
+  transition: 0.5s all;
+  height: auto;
+  overflow: hidden;
+  &.hide{
+    height: 0px;
+  }
+}
+.reg-trademark {
+  font-size: 50%;
+  vertical-align: top;
+}
+p.intro {
+  padding: 12px 0px;
+}
+span.p-directions {
+  display: block;
+  padding-bottom: 4px;
+}
+.group-statement {
+  padding: 18px 0px;
+  opacity: 1;
+  transition: 0.5s all;
+  &.hide {
+    opacity: 0;
+  }
+}
+.group-title {
+  font-size: 120%;
+}
+.results-container {
+  padding: 12px 0px
+}
+.result-title {
+  text-align: left;
+  font-size: 175%;
+  color: @color-4;
+  padding-bottom: 8px;
+}
+.result-instructions {
+  list-style: circle;
+  margin: 0px 0px 16px 20px;
+  > li {
+    padding: 4px 0px;
+    color: @color-4;
+  }
+}
+.results-table {
+  width: 100%;
+  color: @color-4;
+  border-collapse: collapse;
+  table, th, td {
+    border: 1px solid black;
+  }
+  th, td {
+    padding: 8px;
+  }
+  font-size: 150%;
+  text-align: center;
+}
+
+li.statement, div.statement-results {
+  border: 2px solid @color-1;
+  border-radius: @borderRadius;
+  padding: 12px 24px;
+  margin: 8px auto;
+  font-size: 125%;
+  display: inline-block;
+  cursor: move;
+  .no-select;
+}
+li.statement {
+  .BoxShadowHelper(3);
+  &:active {
+    background-color: @color-3;
+    .BoxShadowHelper(1);
+  }
+  &.final {
+    cursor: pointer;
+    > .number {
+      display: none;
+    }
+    &.selected {
+      background-color: @color-3;
+    }
+  }
+}
+div.number {
+  // min-width: 50px;
+  // min-height: 50px;
+  float: left;
+  // border: 1px solid @color-4;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 175%;
+}
+div.li-body {
+  margin-left: 75px;
+}
+.start-quiz, .reset-quiz, .next-quiz, .show-results {
+  .BoxShadowHelper(5);
+  display: block;
+  display: none;
+  max-width: 175px;
+  margin: auto;
+  text-align: center;
+  background-color: @color-4;
+  color: @color-5;
+  font-size: 125%;
+  padding: 16px 6px;
+  cursor: pointer;
+  .no-select;
+  &:active {
+    .BoxShadowHelper(1);
+  }
+}
+
+.bottom-container {
+  &.start {
+    .start-quiz {
+      display: block;
+    }
+  }
+  &.next {
+    .next-quiz {
+      display: block;
+    }
+  }
+  &.reset {
+    .reset-quiz {
+      display: block;
+    }
+  }
+  &.results {
+    .show-results {
+      display: block;
+    }
+  }
+}

@@ -151,22 +151,12 @@ let EnneagramTypeTest = Backbone.View.extend({
   },
   getFormBodyMessage: function () {
     var testResults = this.getTestResults(); // { a: a, b: b, c: c , leadType: this.testResults[3] };
-    return "Group A: " + testResults.a + "\n Group B: " + testResults.b + "\n Group C: " + testResults.c + "\n Lead Type: "  + testResults.leadType;
+    return "\n Group A: " + testResults.a + "\n Group B: " + testResults.b + "\n Group C: " + testResults.c + "\n Lead Type: "  + testResults.leadType;
   },
   onFinishTest: function () {
-    this.$el.find(".form-header").val("Enneagram--Type--Test");
+    this.$el.find(".form-header").val("Enneagram--Type--Test: Results");
     this.$el.find(".form-body").val(this.getFormBodyMessage());
     this.$el.find(':submit').click();
-  },
-  onSubmitForm: function () {
-    return (function(form) {
-        Y.use('squarespace-form-submit', 'node', function(Y){
-          (new Y.Squarespace.FormSubmit({
-            formNode: Y.Node(form)
-          })).submit('593718fca5790acf9afc3260', '5937186dbebafb12975c9a7b', 'page-5937186dbebafb12975c9a7b');
-        });
-        return false;
-      })(this);
   },
   render: function () {
     this.bottomContainerEl.append(buttonContainerHTML);

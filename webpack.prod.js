@@ -51,6 +51,8 @@ module.exports = {
       minimize: true,
       debug: false
     }),
+    new webpack.ProvidePlugin({	_: "underscore", "window._": "underscore" }),
+    new webpack.ProvidePlugin({ $: "jquery", jQuery: "jquery","window.jQuery": "jquery" }),
     new webpack.optimize.UglifyJsPlugin(),
   //   new webpack.optimize.UglifyJsPlugin({
   //     beautify: false,

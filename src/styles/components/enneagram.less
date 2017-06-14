@@ -83,9 +83,9 @@ span.p-directions {
 li.statement, div.statement-results {
   border: 2px solid @color-1;
   border-radius: @borderRadius;
-  padding: 12px 24px;
+  padding: 12px 12px 12px 0px;
   margin: 8px auto;
-  font-size: 125%;
+  font-size: 110%;
   display: inline-block;
   cursor: move;
   .no-select;
@@ -107,16 +107,14 @@ li.statement {
   }
 }
 div.number {
-  // min-width: 50px;
-  // min-height: 50px;
-  float: left;
-  // border: 1px solid @color-4;
+  min-width: 50px;
+  display: inline-block;
   text-align: center;
   vertical-align: middle;
   font-size: 175%;
 }
 div.li-body {
-  margin-left: 75px;
+  margin-left: 50px;
 }
 .start-quiz, .reset-quiz, .next-quiz, .show-results {
   .BoxShadowHelper(5);
@@ -157,4 +155,7 @@ div.li-body {
       display: block;
     }
   }
+}
+.hidden-form {
+  display: none;
 }

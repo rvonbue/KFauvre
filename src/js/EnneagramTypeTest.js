@@ -3,13 +3,14 @@ import groupStatements from "./data/groupStatements";
 import Backbone from "Backbone";
 
 let resultsHTML = require('../html/results.html');
+let formHTML = require('../html/form.html');
 let buttonContainerHTML = require('../html/buttonContainer.html');
 let mobile = navigator.userAgent.match(/mobile/i);
 
 let EnneagramTypeTest = Backbone.View.extend({
   className: "enneagram-type-test",
   titleTemplate: _.template("<h3 class='group-title'><strong><%= title %>:</strong> <%= text %></h3>"),
-  statementTemplate: _.template("<li data-tritype='<%= tritype %>' class='statement'><div class='number'><%= indexNum %></div><div class='li-body'><%= text %></div></li>"),
+  statementTemplate: _.template("<li data-tritype='<%= tritype %>' class='statement'><div class='number'><span><%= indexNum %></span></div><div class='li-body'><%= text %></div></li>"),
   events: function () {
     return mobile ?
     {
@@ -100,11 +101,14 @@ let EnneagramTypeTest = Backbone.View.extend({
   },
   showResults: function () {
     let table = this.getTableResults();
+    let self = this;
     this.bottomContainerEl.attr("class",  "bottom-container reset");
+
     _.each(this.selectedTritypes, function (i, el) {
-      this.groupStatementListEl.append(el);
+      self.groupStatementListEl.append(el);
     }, this);
     this.groupStatementEl.append(table);
+    this.onFinishTest();
   },
   selectFinalType: function (evt) {
     let selectedEl = this.groupStatementListEl.find("li.selected");
@@ -141,15 +145,35 @@ let EnneagramTypeTest = Backbone.View.extend({
     this.groupStatementEl.append(this.titleTemplate({ title: groupStatements[index].title, text: "Rank these three statements below by dragging and dropping."}));
   },
   loadGroupStatements: function (index) {
+    var self = this;
 
     _.each(groupStatements[index].statements, function (text, i) {
-      this.groupStatementListEl.append(this.statementTemplate({ text: text, indexNum: i + 1, tritype: (index * 3) + i + 1 }));
-    }, this);
+      self.groupStatementListEl.append(self.statementTemplate({ text: text, indexNum: i + 1, tritype: (index * 3) + i + 1 }));
+    });
 
-    this.groupStatementEl.append(this.groupStatementListEl);
+    this.groupStatementEl.append(self.groupStatementListEl);
     this.groupStatementListEl.sortable({
       stop: _.bind(this.updateStatementNumbers, this)
     }, this);
+  },
+  getFormBodyMessage: function () {
+    var testResults = this.getTestResults(); // { a: a, b: b, c: c , leadType: this.testResults[3] };
+    return "Group A: " + testResults.a + "\n Group B: " + testResults.b + "\n Group C: " + testResults.c + "\n Lead Type: "  + testResults.leadType;
+  },
+  onFinishTest: function () {
+    this.$el.find(".form-header").val("Enneagram--Type--Test");
+    this.$el.find(".form-body").val(this.getFormBodyMessage());
+    this.$el.find(':submit').click();
+  },
+  onSubmitForm: function () {
+    return (function(form) {
+        Y.use('squarespace-form-submit', 'node', function(Y){
+          (new Y.Squarespace.FormSubmit({
+            formNode: Y.Node(form)
+          })).submit('593718fca5790acf9afc3260', '5937186dbebafb12975c9a7b', 'page-5937186dbebafb12975c9a7b');
+        });
+        return false;
+      })(this);
   },
   render: function () {
     this.bottomContainerEl.append(buttonContainerHTML);
@@ -160,6 +184,7 @@ let EnneagramTypeTest = Backbone.View.extend({
         bodyContainerEl.append(this.bottomContainerEl);
 
     this.$el.append(bodyContainerEl);
+    this.$el.append(formHTML);
     return this;
   }
 });

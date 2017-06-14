@@ -12,5 +12,5 @@ let navListHTML = require("./html/navlist.html");
 $(function () {
   let typeTest = new EnneagramTypeTest({});
   $("#enneagram-type-test").empty().append(typeTest.render().el);
-//   console.log("Can find El on Page", $("#enneagram-type-test").length);
+  console.log("Can find El on Page", $("#enneagram-type-test").length);
 });

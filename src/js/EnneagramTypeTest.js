@@ -11,20 +11,13 @@ let EnneagramTypeTest = Backbone.View.extend({
   className: "enneagram-type-test",
   titleTemplate: _.template("<h3 class='group-title'><strong><%= title %>:</strong> <%= text %></h3>"),
   statementTemplate: _.template("<li data-tritype='<%= tritype %>' class='statement'><div class='number'><span><%= indexNum %></span></div><div class='li-body'><%= text %></div></li>"),
-  events: function () {
-    return mobile ?
-    {
-      "touchend .next-quiz": 'clickNextStatement',
-      "touchend .start-quiz": "startQuiz",
-      "touchend .reset-quiz": "resetQuiz"
-    } :
+  events:
     {
       "click .next-quiz": "clickNextStatement",
       "click .start-quiz": "startQuiz",
       "click .reset-quiz": "resetQuiz",
       "click .show-results": "clickShowResults",
       "click .statement.final": "selectFinalType"
-    }
   },
   initialize: function () {
     this.groupStatementEl = $("<div class='group-statement'></div>");
@@ -125,7 +118,7 @@ let EnneagramTypeTest = Backbone.View.extend({
     this.loadGroupStatements(index);
   },
   loadLastGroup: function () {
-    this.groupStatementEl.append(this.titleTemplate({ title:"Final", text: "Now select which statement out of the three groups represents you best" }));
+    this.groupStatementEl.append(this.titleTemplate({ title:"Final", text: "Now select the ONE statement that represents you best" }));
     this.groupStatementListEl.append(this.selectedTritypes);
     _.each(this.selectedTritypes, function (el) {
       el.addClass("final");

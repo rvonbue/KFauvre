@@ -1,10 +1,15 @@
-.enneagram-type-test {
+#enneagram-type-test {
+  max-width: 800px;
+  margin:auto;
+}
+enneagram-type-test {
   padding: 18px 0px;
   margin: 18px 0px;
   border: 2px solid @color-1;
 }
 h3.type-test {
   margin-bottom:0px;
+  color: @color-1;
 }
 .enneagram-body-container {
   max-width: 800px;
@@ -83,7 +88,7 @@ span.p-directions {
 li.statement, div.statement-results {
   border: 2px solid @color-1;
   border-radius: @borderRadius;
-  padding: 12px 12px 12px 0px;
+  padding: 12px;
   margin: 8px auto;
   font-size: 110%;
   display: inline-block;
@@ -112,9 +117,11 @@ div.number {
   text-align: center;
   vertical-align: middle;
   font-size: 175%;
+  position: absolute;
+  left: -50px;
 }
 div.li-body {
-  margin-left: 50px;
+  margin: 0px;
 }
 .start-quiz, .reset-quiz, .next-quiz, .show-results {
   .BoxShadowHelper(5);
@@ -158,4 +165,10 @@ div.li-body {
 }
 .hidden-form {
   display: none;
+}
+#sortable-list {
+  padding: 0px;
+  position: relative;
+  max-width: 84%;
+  margin: auto;
 }

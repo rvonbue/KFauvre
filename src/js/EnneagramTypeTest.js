@@ -1,8 +1,9 @@
 import directionsHTML from "../html/enneagramTypeTest.html";
 import groupStatements from "./data/groupStatements";
+import extNavList from "./data/externalNavList";
 import Backbone from "Backbone";
 
-let resultsHTML = require('../html/results.html');
+let resultsHTML = require('../html/resultsTable.html');
 let formHTML = require('../html/form.html');
 let buttonContainerHTML = require('../html/buttonContainer.html');
 let mobile = navigator.userAgent.match(/mobile/i);
@@ -81,11 +82,13 @@ let EnneagramTypeTest = Backbone.View.extend({
     return text;
   },
   getTestResults: function () {
+    extNavList.unshift(window.location.origin);
+
     let a = [this.testResults[0][0].tritype, this.calcGroupResults(this.testResults[0])];
     let b = [this.testResults[1][0].tritype, this.calcGroupResults(this.testResults[1])];
     let c = [this.testResults[2][0].tritype, this.calcGroupResults(this.testResults[2])];
-
-    return { a: a, b: b, c: c , leadType: this.testResults[3] };
+    console.log("asdlkfasjkdfhsajkdf", extNavList);
+    return { a: a, b: b, c: c , leadType: this.testResults[3], extNavList: extNavList };
   },
   clickShowResults: function () {
     this.groupStatementEl.empty();
@@ -101,7 +104,7 @@ let EnneagramTypeTest = Backbone.View.extend({
       self.groupStatementListEl.append(el);
     }, this);
     this.groupStatementEl.append(table);
-    this.onFinishTest();
+    // this.onFinishTest();
   },
   selectFinalType: function (evt) {
     let selectedEl = this.groupStatementListEl.find("li.selected");

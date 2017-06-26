@@ -2,6 +2,6 @@
 /build
 node_modules/
 *.log
-server/css
+src/images
 server/js
 client/src/js/data/*

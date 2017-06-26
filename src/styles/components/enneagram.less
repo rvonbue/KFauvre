@@ -1,10 +1,15 @@
-.enneagram-type-test {
+#enneagram-type-test {
+  max-width: 800px;
+  margin:auto;
+}
+enneagram-type-test {
   padding: 18px 0px;
   margin: 18px 0px;
   border: 2px solid @color-1;
 }
 h3.type-test {
-  margin-bottom:0px;
+  margin:0px;
+  color: @color-1;
 }
 .enneagram-body-container {
   max-width: 800px;
@@ -76,16 +81,16 @@ span.p-directions {
   th, td {
     padding: 8px;
   }
-  font-size: 150%;
+  font-size: 120%;
   text-align: center;
 }
 
 li.statement, div.statement-results {
-  border: 2px solid @color-1;
+  border: 1px solid @color-1;
   border-radius: @borderRadius;
-  padding: 12px 24px;
+  padding: 12px;
   margin: 8px auto;
-  font-size: 125%;
+  font-size: 110%;
   display: inline-block;
   cursor: move;
   .no-select;
@@ -107,16 +112,16 @@ li.statement {
   }
 }
 div.number {
-  // min-width: 50px;
-  // min-height: 50px;
-  float: left;
-  // border: 1px solid @color-4;
+  min-width: 50px;
+  display: inline-block;
   text-align: center;
   vertical-align: middle;
   font-size: 175%;
+  position: absolute;
+  left: -50px;
 }
 div.li-body {
-  margin-left: 75px;
+  margin: 0px;
 }
 .start-quiz, .reset-quiz, .next-quiz, .show-results {
   .BoxShadowHelper(5);
@@ -125,7 +130,7 @@ div.li-body {
   max-width: 175px;
   margin: auto;
   text-align: center;
-  background-color: @color-4;
+  background-color: @color-1;
   color: @color-5;
   font-size: 125%;
   padding: 16px 6px;
@@ -157,4 +162,13 @@ div.li-body {
       display: block;
     }
   }
+}
+.hidden-form {
+  display: none;
+}
+#sortable-list {
+  padding: 0px;
+  position: relative;
+  max-width: 84%;
+  margin: auto;
 }

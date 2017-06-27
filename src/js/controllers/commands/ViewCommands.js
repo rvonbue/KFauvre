@@ -1,3 +1,0 @@
-module.exports = {
-  GET_SELECTED_SECTION: "GET_SELECTED_SECTION"
-};

@@ -6,7 +6,7 @@ const ExtractTextPlugin = require("extract-text-webpack-plugin");
 module.exports = {
   entry: './src/index.js',
   output: {
-    filename: 'bundle.js',
+    filename: 'typetest.js',
     path: path.resolve(__dirname, 'dist')
   },
   resolve : {
@@ -46,7 +46,7 @@ module.exports = {
     ]
   },
   plugins: [
-    new ExtractTextPlugin("allStyles.css"),
+    new ExtractTextPlugin("typeteststyles.css"),
     new webpack.LoaderOptionsPlugin({
       minimize: true,
       debug: false

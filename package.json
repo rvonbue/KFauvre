@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build:dev": "webpack-dev-server --env=dev",
+    "build:dev": "webpack-dev-server --hot --inline --progress --env=dev ",
     "build:dist": "webpack --env=prod --progress --profile --colors"
   },
   "author": "Rick von Buelow",

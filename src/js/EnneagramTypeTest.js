@@ -3,9 +3,10 @@ import groupStatements from "./data/groupStatements";
 import extNavList from "./data/externalNavList";
 import Backbone from "Backbone";
 
-let resultsHTML = require('../html/resultsTable.html');
-let formHTML = require('../html/form.html');
+let questionnaireHTML = require("../html/questionnaire.html");
 let buttonContainerHTML = require('../html/buttonContainer.html');
+let resultsHTML = require('../html/resultsTable.html');
+// let formHTML = require('../html/form.html');
 let mobile = navigator.userAgent.match(/mobile/i);
 
 let EnneagramTypeTest = Backbone.View.extend({
@@ -55,6 +56,7 @@ let EnneagramTypeTest = Backbone.View.extend({
     testResults.push(groupResults);
   },
   startQuiz: function () {
+    this.$el.find("#questionnaire").hide();
     this.resetQuizVariables();
     this.bottomContainerEl.removeClass("start").addClass("next");
     this.loadNewGroup();
@@ -87,7 +89,6 @@ let EnneagramTypeTest = Backbone.View.extend({
     let a = [this.testResults[0][0].tritype, this.calcGroupResults(this.testResults[0])];
     let b = [this.testResults[1][0].tritype, this.calcGroupResults(this.testResults[1])];
     let c = [this.testResults[2][0].tritype, this.calcGroupResults(this.testResults[2])];
-    console.log("asdlkfasjkdfhsajkdf", extNavList);
     return { a: a, b: b, c: c , leadType: this.testResults[3], extNavList: extNavList };
   },
   clickShowResults: function () {
@@ -104,7 +105,7 @@ let EnneagramTypeTest = Backbone.View.extend({
       self.groupStatementListEl.append(el);
     }, this);
     this.groupStatementEl.append(table);
-    // this.onFinishTest();
+    this.onSubmitForm();
   },
   selectFinalType: function (evt) {
     let selectedEl = this.groupStatementListEl.find("li.selected");
@@ -156,7 +157,7 @@ let EnneagramTypeTest = Backbone.View.extend({
     var testResults = this.getTestResults(); // { a: a, b: b, c: c , leadType: this.testResults[3] };
     return "\n Group A: " + testResults.a + "\n Group B: " + testResults.b + "\n Group C: " + testResults.c + "\n Lead Type: "  + testResults.leadType;
   },
-  onFinishTest: function () {
+  onSubmitForm: function () {
     this.$el.find(".form-header").val("Enneagram--Type--Test: Results");
     this.$el.find(".form-body").val(this.getFormBodyMessage());
     this.$el.find(':submit').click();
@@ -165,12 +166,13 @@ let EnneagramTypeTest = Backbone.View.extend({
     this.bottomContainerEl.append(buttonContainerHTML);
 
     let bodyContainerEl = $("<div class='enneagram-body-container'</div>");
-        bodyContainerEl.append(directionsHTML);
+        // bodyContainerEl.append(directionsHTML);
+        bodyContainerEl.append(questionnaireHTML);
         bodyContainerEl.append(this.groupStatementEl);
         bodyContainerEl.append(this.bottomContainerEl);
 
     this.$el.append(bodyContainerEl);
-    this.$el.append(formHTML);
+    // this.$el.append(formHTML);
     return this;
   }
 });

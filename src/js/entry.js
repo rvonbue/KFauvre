@@ -1,8 +1,4 @@
-var view;
-
-// import $ from 'jquery';
-// window.$ = $;
-// window.jQuery = $;
+let view;
 
 import _ from "underscore";
 window._ = _;

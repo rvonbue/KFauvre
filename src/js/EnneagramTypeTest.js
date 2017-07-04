@@ -6,7 +6,6 @@ import Backbone from "Backbone";
 let questionnaireHTML = require("../html/questionnaire.html");
 let buttonContainerHTML = require('../html/buttonContainer.html');
 let resultsHTML = require('../html/resultsTable.html');
-// let formHTML = require('../html/form.html');
 let mobile = navigator.userAgent.match(/mobile/i);
 
 let EnneagramTypeTest = Backbone.View.extend({
@@ -68,6 +67,7 @@ let EnneagramTypeTest = Backbone.View.extend({
     this.selectedTritypes = [];
   },
   resetQuiz: function () {
+    this.$el.find("#questionnaire").show();
     this.groupStatementEl.empty();
     this.$el.find(".instructions-container").removeClass("hide");
     this.bottomContainerEl.attr("class", "bottom-container start");
@@ -113,7 +113,8 @@ let EnneagramTypeTest = Backbone.View.extend({
 
     if (selectedEl) selectedEl.removeClass("selected");
     $(evt.currentTarget).addClass("selected");
-    this.bottomContainerEl.addClass("results");
+    this.bottomContainerEl.addClass("results").removeClass("disable");
+    this.bottomContainerEl.find(".show-results").attr("title","").removeClass("disabled");
     this.testResults.push(selectedType);
   },
   loadNewGroup: function () {
@@ -128,7 +129,8 @@ let EnneagramTypeTest = Backbone.View.extend({
       el.addClass("final");
     });
     this.groupStatementEl.append(this.groupStatementListEl);
-    this.bottomContainerEl.attr("class", "bottom-container");
+    this.bottomContainerEl.attr("class", "bottom-container results"); // remove all classes
+    this.bottomContainerEl.find(".show-results").addClass("disabled");
   },
   updateStatementNumbers: function () {
     let num = 1;
@@ -155,12 +157,30 @@ let EnneagramTypeTest = Backbone.View.extend({
   },
   getFormBodyMessage: function () {
     var testResults = this.getTestResults(); // { a: a, b: b, c: c , leadType: this.testResults[3] };
-    return "\n Group A: " + testResults.a + "\n Group B: " + testResults.b + "\n Group C: " + testResults.c + "\n Lead Type: "  + testResults.leadType;
+    return "\n\n Group A: " + testResults.a + "\n Group B: " + testResults.b + "\n Group C: " + testResults.c + "\n Lead Type: "  + testResults.leadType;
   },
   onSubmitForm: function () {
-    this.$el.find(".form-header").val("Enneagram--Type--Test: Results");
-    this.$el.find(".form-body").val(this.getFormBodyMessage());
-    this.$el.find(':submit').click();
+    var bodyString = this.getAllFieldElements() + this.getFormBodyMessage();
+
+    var formEl = $("form");
+        formEl.find(".form-item.field.text").find("input").val("Enneagram Questionnaire & Test");  //Subject Header
+        formEl.find(".form-item.field.textarea").find("textarea").val(bodyString);
+        formEl.find(':submit').click()
+  },
+  getAllFieldElements: function () {
+    var allFieldElementsString = "";
+
+    var fieldElements = this.$el.find("#questionnaire").find(".field-element.text");
+
+    _.each(fieldElements, function (el) {
+      allFieldElementsString += this.getSingleFieldElement(el);
+    }, this);
+
+    return allFieldElementsString;
+  },
+  getSingleFieldElement: function (el) {
+    var labelText = $("label[for='" +  el.id + "']").text();
+    return "\n " + labelText + ": " + el.val;
   },
   render: function () {
     this.bottomContainerEl.append(buttonContainerHTML);
@@ -170,9 +190,7 @@ let EnneagramTypeTest = Backbone.View.extend({
         bodyContainerEl.append(questionnaireHTML);
         bodyContainerEl.append(this.groupStatementEl);
         bodyContainerEl.append(this.bottomContainerEl);
-
     this.$el.append(bodyContainerEl);
-    // this.$el.append(formHTML);
     return this;
   }
 });

@@ -4,9 +4,6 @@ import stylesheet from "./styles/index.less";
 import EnneagramTypeTest from "./js/EnneagramTypeTest";
 require("jquery-ui");  //jquery add-on
 
-// let headerHTML = require("./html/header.html");
-// let navListHTML = require("./html/navlist.html");
-
 $(function () {
   let enneagramTypeTestEl = $("#enneagram-type-test");
   let children = enneagramTypeTestEl.children();
@@ -15,5 +12,5 @@ $(function () {
     let typeTest = new EnneagramTypeTest({});
     enneagramTypeTestEl.empty().append(typeTest.render().el);
   }
-
+  console.log("All Inputs", $("input"));
 });

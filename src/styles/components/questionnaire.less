@@ -22,6 +22,11 @@
   > div {
     display: inline-block;
   }
+  .form-item {
+    > label {
+      display: none;
+    }
+  }
 }
 .strength-weakness, .five-adjectives, .favorites, .past-user-questions {
   margin: 34px 0px;
@@ -77,13 +82,16 @@
      min-width: 88%;
    }
 }
-.questionnaire-header-1 {
+.questionnaire-header-1, .questionnaire-header-3 {
+  border: none;
   text-align: center;
   display: block;
   font-size: 175%;
-  border: 1px solid @color-2;
   padding: 12px 0px;
   margin: 0px auto 30px auto !important;
+}
+.questionnaire-header-3{
+  color: @color-2;
 }
 .questionnaire-header-2 {
   text-align: center;

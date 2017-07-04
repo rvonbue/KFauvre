@@ -14,7 +14,8 @@ h3.type-test {
 .enneagram-body-container {
   width: 100%;
   margin: auto;
-  padding: 0px 45px;
+  padding: 12px 45px;
+  border: 1px solid @color-2;
   > hr {
     border-color: @color-1;
   }
@@ -163,7 +164,11 @@ div.li-body {
     }
   }
 }
-
+.show-results.disabled {
+  background-color: #AAA7A9;
+  opacity: .50;
+  pointer-events: none;
+}
 #sortable-list {
   padding: 0px;
   position: relative;
